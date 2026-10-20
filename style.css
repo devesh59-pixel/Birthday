@@ -56,6 +56,9 @@ html, body {
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  scroll-behavior: smooth;
 }
 
 /* Canvases for full-screen Confetti & Sparkles */
@@ -540,7 +543,7 @@ html, body {
    ========================================================================== */
 .interactive-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 30px;
 }
 
@@ -703,6 +706,19 @@ html, body {
   z-index: 4;
   cursor: pointer;
   transition: transform 0.2s ease;
+  touch-action: manipulation;
+}
+
+/* Touch Hitbox for easy tapping on phones & tablets */
+.candle::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: -22px;
+  width: 58px;
+  height: 95px;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .candle:hover {
@@ -1461,36 +1477,289 @@ html, body {
 }
 
 /* ==========================================================================
-   11. RESPONSIVE BREAKPOINTS
+   11. COMPREHENSIVE RESPONSIVE BREAKPOINTS (Mobile, Tablets, Desktops)
    ========================================================================== */
-@media (max-width: 768px) {
-  .app-header {
-    padding: 12px 16px;
-  }
-  .header-controls .btn-text {
-    display: none;
-  }
-  .header-controls .control-btn {
-    padding: 8px 12px;
-  }
+
+/* Tablets & Small Laptops (769px to 1024px) */
+@media (max-width: 1024px) {
   .content-wrapper {
-    padding: 25px 16px 60px;
-    gap: 35px;
+    max-width: 900px;
+    padding: 30px 20px 70px;
+    gap: 40px;
+  }
+  .interactive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .birthday-heading {
+    font-size: clamp(2.3rem, 6.5vw, 4rem);
   }
   .greeting-card-container {
-    height: 420px;
+    max-width: 540px;
+    height: 400px;
+  }
+}
+
+/* Tablets (portrait) & Large Phones (max-width: 768px) */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .logo-text {
+    font-size: 1.15rem;
+  }
+  .celebrate-icon {
+    font-size: 1.35rem;
+  }
+  .header-controls {
+    gap: 6px;
+  }
+  .header-controls .btn-text {
+    display: none; /* Compact icon-only controls on mobile */
+  }
+  .header-controls .control-btn {
+    padding: 8px 11px;
+    font-size: 1.05rem;
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+  }
+  .content-wrapper {
+    padding: 20px 14px 60px;
+    gap: 32px;
+  }
+  .interactive-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .interactive-card {
+    padding: 22px 18px;
+    border-radius: var(--radius-md);
+  }
+  .hero-section {
+    padding: 15px 5px 0;
+  }
+  .hero-badge {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    letter-spacing: 1px;
+  }
+  .birthday-heading {
+    font-size: clamp(2.1rem, 7vw, 3.2rem);
+    margin-bottom: 14px;
+  }
+  .word-happy, .word-birthday {
+    margin-right: 6px;
+  }
+  .hero-message {
+    font-size: 1.05rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .hero-stats {
+    gap: 8px;
+  }
+  .stat-pill {
+    padding: 7px 12px;
+    font-size: 0.82rem;
+  }
+  .greeting-card-container {
+    height: 430px;
+    max-width: 100%;
   }
   .card-face {
-    padding: 24px;
+    padding: 22px 18px;
+    border-radius: var(--radius-md);
+  }
+  .front-content h3 {
+    font-size: 1.5rem;
+  }
+  .envelope-icon {
+    font-size: 2.8rem;
+  }
+  .seal-badge {
+    font-size: 0.75rem;
+    padding: 6px 14px;
   }
   .letter-body {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+    line-height: 1.45;
+    margin: 10px 0;
+  }
+  .signature-name {
+    font-size: 1.45rem;
+  }
+  .card-flip-back-hint {
+    font-size: 0.74rem;
+  }
+  .fortune-card {
+    padding: 22px 16px;
+  }
+  .fortune-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .fortune-icon {
+    font-size: 2rem;
+  }
+  .fortune-header h3 {
+    font-size: 1.2rem;
+  }
+  .fortune-header p {
+    font-size: 0.85rem;
+  }
+  .fortune-box {
+    padding: 16px;
+    min-height: 80px;
+  }
+  #fortune-text {
+    font-size: 1.35rem;
+  }
+  .fortune-btn {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    justify-content: center;
   }
   .toast {
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    text-align: center;
+    left: 14px;
+    right: 14px;
+    bottom: 16px;
+    font-size: 0.84rem;
+    padding: 12px 16px;
     justify-content: center;
+  }
+}
+
+/* Mobile Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .intro-content {
+    padding: 10px;
+  }
+  .floating-badge {
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    margin-bottom: 15px;
+  }
+  .intro-title {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+    margin-bottom: 10px;
+  }
+  .intro-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+  .gift-box {
+    width: 120px;
+    height: 110px;
+    margin: 5px 0 25px;
+  }
+  .gift-body {
+    height: 80px;
+  }
+  .gift-lid {
+    height: 30px;
+  }
+  .birthday-heading {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    line-height: 1.2;
+  }
+  .hero-message {
+    font-size: 0.95rem;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .stat-pill:nth-child(3) {
+    grid-column: span 2;
+    justify-content: center;
+  }
+  .cake-stage {
+    padding: 30px 0 20px;
+  }
+  .cake-container {
+    width: 170px;
+    height: 140px;
+  }
+  .cake-plate {
+    width: 210px;
+  }
+  .tier-bottom {
+    width: 165px;
+    height: 55px;
+  }
+  .tier-top {
+    width: 120px;
+    height: 44px;
+  }
+  .polaroid-frame {
+    max-width: 250px;
+    padding: 10px 10px 18px;
+    transform: rotate(-1.5deg);
+  }
+  .caption-text {
+    font-size: 1.35rem;
+  }
+  .greeting-card-container {
+    height: 440px;
+  }
+  .card-face {
+    padding: 18px 14px;
+  }
+  .back-to {
+    font-size: 1.2rem;
+  }
+  .letter-body {
+    font-size: 1.25rem;
+  }
+  .modal-box {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+  .modal-header h3 {
+    font-size: 1.25rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+  }
+}
+
+/* Very Small Screens (e.g. iPhone SE, 320px - 360px) */
+@media (max-width: 360px) {
+  .logo-text {
+    font-size: 1rem;
+  }
+  .birthday-heading {
+    font-size: 1.7rem;
+  }
+  .stat-pill {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+  .greeting-card-container {
+    height: 460px;
+  }
+}
+
+/* Mobile Landscape & Low Height devices */
+@media (max-height: 600px) and (orientation: landscape) {
+  .intro-content {
+    padding: 15px;
+  }
+  .gift-box {
+    width: 90px;
+    height: 85px;
+    margin: 5px 0 15px;
+  }
+  .intro-title {
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+  .intro-subtitle {
+    margin-bottom: 12px;
   }
 }
