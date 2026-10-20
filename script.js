@@ -98,14 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadUrlParameters();
 
-  // Set formatted current date on card & polaroid
-  const today = new Date();
-  const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
-  const formattedDate = today.toLocaleDateString(undefined, dateOptions);
+  // Fixed Birthday Date: October 21
+  const birthdayDate = "October 21";
   const currentDateEl = document.getElementById('current-date');
   const letterDateEl = document.getElementById('letter-date');
-  if (currentDateEl) currentDateEl.textContent = formattedDate;
-  if (letterDateEl) letterDateEl.textContent = formattedDate;
+  if (currentDateEl) currentDateEl.textContent = birthdayDate;
+  if (letterDateEl) letterDateEl.textContent = birthdayDate;
 
   // ==========================================================================
   // 2. WEB AUDIO API SYNTHESIZER (Happy Birthday Melody & Sound Effects)
