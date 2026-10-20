@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Diya! 🎉 A Special Celebration For You</title>
+  <meta name="description" content="An interactive, magical birthday celebration website filled with confetti, music, interactive cake, balloons, and personal wishes!">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas for Confetti and Fireworks -->
+  <canvas id="confetti-canvas"></canvas>
+  
+  <!-- Sparkle trailing effect canvas -->
+  <canvas id="sparkle-canvas"></canvas>
+
+  <!-- ==================== INTRO SURPRISE MODAL / OVERLAY ==================== -->
+  <div id="intro-screen" class="intro-screen">
+    <div class="intro-content">
+      <div class="floating-badge">✨ Someone sent you a special surprise! ✨</div>
+      <h1 class="intro-title">Happy Birthday!</h1>
+      <p class="intro-subtitle">Tap the magical gift box below to unwrap your celebration</p>
+
+      <!-- 3D Gift Box -->
+      <div id="gift-box" class="gift-box" role="button" aria-label="Open Birthday Gift" tabindex="0">
+        <div class="gift-lid">
+          <div class="ribbon-bow"></div>
+          <div class="ribbon-vertical-lid"></div>
+        </div>
+        <div class="gift-body">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+        </div>
+        <div class="gift-shadow"></div>
+      </div>
+
+      <div class="tap-hint">
+        <span class="finger-pointer">👆</span> Click or Tap to Open
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CELEBRATION APP ==================== -->
+  <div id="main-app" class="main-app hidden">
+    <!-- Top Action Navigation -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="celebrate-icon">🎈</span>
+        <span class="logo-text">Birthday Joy</span>
+      </div>
+      <div class="header-controls">
+        <button id="btn-music" class="control-btn" title="Toggle Happy Birthday Music" aria-label="Toggle Music">
+          <span class="icon" id="music-icon">🎵</span>
+          <span class="btn-text">Music <span id="music-status">OFF</span></span>
+        </button>
+        <button id="btn-confetti" class="control-btn btn-primary" title="Launch Confetti Cannon" aria-label="Launch Confetti">
+          <span class="icon">🎉</span>
+          <span class="btn-text">Blast Confetti!</span>
+        </button>
+        <button id="btn-personalize" class="control-btn" title="Personalize Name & Wish" aria-label="Personalize">
+          <span class="icon">✏️</span>
+          <span class="btn-text">Personalize</span>
+        </button>
+        <button id="btn-share" class="control-btn" title="Share with Friend" aria-label="Share">
+          <span class="icon">🔗</span>
+          <span class="btn-text">Share Wish</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating Balloon Container (Dynamically spawned) -->
+    <div id="balloon-container" class="balloon-container" aria-hidden="true"></div>
+
+    <main class="content-wrapper">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        
+        <div class="hero-badge">
+          <span>🌟 IT'S YOUR SPECIAL DAY 🌟</span>
+        </div>
+        
+        <h1 class="birthday-heading">
+          <span class="word-happy">HAPPY</span>
+          <span class="word-birthday">BIRTHDAY</span>
+          <span class="recipient-name" id="display-name">Diya</span>!
+        </h1>
+        
+        <p class="hero-message" id="display-message">
+          Wishing you a year filled with grand adventures, radiant smiles, immense success, and endless joy!
+        </p>
+
+        <!-- Stats / Fun Badges -->
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <span class="stat-icon">🎂</span>
+            <span class="stat-label">100% Sweet Vibes</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">🎈</span>
+            <span class="stat-label" id="popped-counter">0 Balloons Popped</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">✨</span>
+            <span class="stat-label">Unlimited Wishes</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Grid: Cake & Polaroid -->
+      <section class="interactive-grid">
+        <!-- Interactive Cake Card -->
+        <div class="interactive-card cake-card">
+          <div class="card-header">
+            <h3>Make a Birthday Wish</h3>
+            <span class="badge-tag">Interactive</span>
+          </div>
+          <p class="card-instruction">Click the flickering candle to blow it out and make your wish come true!</p>
+
+          <!-- Interactive Cake Graphic -->
+          <div class="cake-stage" id="cake-stage">
+            <div class="cake-container" id="birthday-cake">
+              <!-- Cake Plate -->
+              <div class="cake-plate"></div>
+              <!-- Bottom Layer -->
+              <div class="cake-tier tier-bottom">
+                <div class="frosting-layer"></div>
+                <div class="sprinkles">
+                  <span class="sp s1"></span>
+                  <span class="sp s2"></span>
+                  <span class="sp s3"></span>
+                  <span class="sp s4"></span>
+                  <span class="sp s5"></span>
+                </div>
+              </div>
+              <!-- Top Layer -->
+              <div class="cake-tier tier-top">
+                <div class="frosting-drips">
+                  <span class="drip"></span>
+                  <span class="drip"></span>
+                  <span class="drip"></span>
+                  <span class="drip"></span>
+                  <span class="drip"></span>
+                </div>
+              </div>
+              <!-- Candle -->
+              <div class="candle" id="candle" role="button" aria-label="Birthday Candle" tabindex="0">
+                <div class="wick"></div>
+                <div class="flame" id="flame">
+                  <div class="flame-core"></div>
+                  <div class="flame-glow"></div>
+                </div>
+                <div class="smoke hidden" id="smoke">
+                  <span class="smoke-wisp w1"></span>
+                  <span class="smoke-wisp w2"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cake-actions">
+            <div id="wish-status" class="wish-status">🕯️ Candle is glowing! Click it to blow it out!</div>
+            <button id="btn-relight" class="btn-subtle hidden">🔥 Re-light Candle</button>
+          </div>
+        </div>
+
+        <!-- Polaroid Memory Photo Card -->
+        <div class="interactive-card photo-card">
+          <div class="card-header">
+            <h3>Celebration Spotlight</h3>
+            <label class="btn-upload" title="Upload custom photo">
+              📷 Change Photo
+              <input type="file" id="photo-input" accept="image/*" class="visually-hidden">
+            </label>
+          </div>
+          
+          <div class="polaroid-wrapper">
+            <div class="polaroid-pin">📌</div>
+            <div class="polaroid-frame" id="polaroid-frame">
+              <div class="photo-container">
+                <img id="celebration-photo" src="assets/birthday_hero.jpg" alt="Festive Birthday Celebration with Cake and Presents">
+              </div>
+              <div class="polaroid-caption">
+                <span class="caption-text" id="polaroid-caption">Cheers to your best year yet! ✨</span>
+                <span class="caption-date" id="current-date">Today's VIP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Wishes & Greeting Card Section -->
+      <section class="greetings-section">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Special Birthday Delivery 💌</h2>
+          <p class="section-subtitle">Flip the card below to read your heartfelt birthday letter</p>
+        </div>
+
+        <div class="greeting-card-container">
+          <div class="flipper-card" id="flipper-card" role="button" aria-label="Flip Birthday Card" tabindex="0">
+            <!-- Front of Card -->
+            <div class="card-face card-front">
+              <div class="front-stamp">GOLDEN EDITION ⭐</div>
+              <div class="front-ribbon"></div>
+              <div class="front-content">
+                <span class="envelope-icon">💌</span>
+                <h3>For You On Your Birthday</h3>
+                <p>Click to open and read your card</p>
+                <div class="seal-badge">TOUCH TO FLIP ↺</div>
+              </div>
+            </div>
+
+            <!-- Back of Card -->
+            <div class="card-face card-back">
+              <div class="back-header">
+                <span class="back-to">Dearest <span class="letter-name">Diya</span>,</span>
+                <span class="back-date" id="letter-date">Celebrating You</span>
+              </div>
+              <div class="letter-body" id="letter-body">
+                May your birthday bring you as much happiness as you bring to everyone around you! May every dream you're chasing find its way to you this year, and may your journey ahead be blessed with health, laugh-out-loud moments, and true joy.
+              </div>
+              <div class="letter-signature">
+                <p>With warmest wishes,</p>
+                <p class="signature-name" id="letter-signature">Your Biggest Cheerleaders 💖</p>
+              </div>
+              <div class="card-flip-back-hint">↺ Click again to close</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Birthday Fortune / Wish Generator -->
+      <section class="fortune-section">
+        <div class="interactive-card fortune-card">
+          <div class="fortune-header">
+            <span class="fortune-icon">🥠</span>
+            <div>
+              <h3>Daily Birthday Fortune & Blessings</h3>
+              <p>Crack open a surprise blessing for your new chapter</p>
+            </div>
+          </div>
+          <div class="fortune-box" id="fortune-box">
+            <p id="fortune-text">"The universe is conspiring to make this your happiest, most unforgettable year yet!"</p>
+          </div>
+          <button id="btn-new-fortune" class="btn-primary fortune-btn">
+            ✨ Crack Another Fortune
+          </button>
+        </div>
+      </section>
+
+      <!-- Footer Celebration -->
+      <footer class="app-footer">
+        <p>Crafted with love & joy for a very special birthday celebration! 🎈🎂✨</p>
+        <p class="footer-tip">Tip: Tap anywhere on the screen or click floating balloons to trigger cheerful bursts!</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ==================== PERSONALIZE MODAL ==================== -->
+  <div id="modal-personalize" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title">Customize Birthday Wish</h3>
+        <button id="btn-close-modal" class="btn-close" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="personalize-form" class="modal-form">
+        <div class="form-group">
+          <label for="input-name">Birthday Person's Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Diya" value="Diya" maxlength="30" required>
+        </div>
+        <div class="form-group">
+          <label for="input-message">Short Birthday Wish</label>
+          <textarea id="input-message" rows="3" placeholder="Write a custom birthday message..." maxlength="180"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="input-sender">From (Your Name / Signature)</label>
+          <input type="text" id="input-sender" placeholder="e.g. Bestie, Your Family, Chris" maxlength="30">
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-modal" class="btn-subtle">Cancel</button>
+          <button type="submit" class="btn-primary">Apply & Update Page ✨</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== SHARE LINK TOAST / MODAL ==================== -->
+  <div id="share-toast" class="toast hidden" role="status" aria-live="polite">
+    <span class="toast-icon">✨</span>
+    <span id="toast-message">Custom link copied to clipboard! Share it with the birthday star!</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
